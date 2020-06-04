@@ -1,0 +1,51 @@
+from sense_hat import SenseHat
+import math
+import time
+import pygame
+sense = SenseHat()
+sense.clear()
+max_z = 0
+pygame.mixer.init()
+pygame.mixer.music.load("Hum 2.wav")
+while True:
+        pygame.mixer.music.play()
+        while pygame.mixer.music.get_busy() == True:
+            continue
+        acceleration = sense.get_accelerometer_raw()
+        x = acceleration['x']
+        y = acceleration['y']
+        z = acceleration['z']
+        accel_tot = math.sqrt(x*x+y*y+z*z)
+        
+        if z > max_z:
+            max_z = z
+        
+        print("x = {0}, y = {1}, z = {2}, accel_tot = {3}".format(round(x, 0), round(y, 0), round(z, 0), accel_tot))
+        
+        #clash!
+        if accel_tot>2:
+            pygame.mixer.music.load("2 clash.wav")
+          #  pygame.mixer.music.play()
+         #   while pygame.mixer.music.get_busy() == True:
+         #       continue
+        #some movement
+        elif accel_tot>0.98:
+            pygame.mixer.music.load("Hum 5.wav")
+        #    pygame.mixer.music.play()
+        #    while pygame.mixer.music.get_busy() == True:
+        #        continue
+        #less movement   
+        else:    
+            pygame.mixer.music.load("Hum 2.wav")
+         #   pygame.mixer.music.play()
+        #    while pygame.mixer.music.get_busy() == True:
+        #        continue
+    
+
+
+
+
+
+
+
+
